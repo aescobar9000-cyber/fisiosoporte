@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FISIOSOPORTE – Terapia Respiratoria a Domicilio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #f4f8f9;
+      --blue-deep: #0b3d5e;
+      --blue-mid: #1565a8;
+      --blue-light: #e8f1fb;
+      --green: #2a9d70;
+      --green-light: #e6f6f0;
+      --green-accent: #38c98a;
+      --gray: #6b7a8d;
+      --gray-light: #d9e4ea;
+      --text: #0f1e2b;
+      --shadow: 0 8px 40px rgba(11,61,94,0.10);
+      --shadow-sm: 0 2px 16px rgba(11,61,94,0.08);
+      --radius: 18px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      height: 70px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,61,94,0.08);
+      box-shadow: 0 2px 20px rgba(11,61,94,0.06);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--blue-mid), var(--green));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon svg { width: 22px; height: 22px; fill: white; }
+    .nav-logo-text { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--blue-deep); letter-spacing: -0.5px; }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--gray); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--blue-mid); }
+
+    .nav-cta {
+      background: var(--green);
+      color: white !important;
+      padding: 9px 20px;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      font-size: 0.88rem !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--green-accent) !important; transform: scale(1.04); }
+
+    @media(max-width:768px){
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      padding-top: 70px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      background: linear-gradient(145deg, #e8f3fc 0%, #f0faf6 50%, #ffffff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -120px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,157,112,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(21,101,168,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      padding: 5rem 5vw 5rem 8vw;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid rgba(42,157,112,0.25);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse 2s infinite; }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      line-height: 1.1;
+      color: var(--blue-deep);
+      margin-bottom: 1.4rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--gray);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--green), #22a06b);
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 6px 24px rgba(42,157,112,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(42,157,112,0.45); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent;
+      color: var(--blue-mid);
+      text-decoration: none;
+      padding: 15px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid var(--blue-mid);
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { background: var(--blue-mid); color: white; }
+
+    .hero-trust {
+      display: flex; align-items: center; gap: 18px;
+      margin-top: 2.5rem;
+    }
+    .hero-trust-avatars { display: flex; }
+    .hero-trust-avatars span {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid white;
+      background: linear-gradient(135deg, var(--blue-light), var(--green-light));
+      margin-left: -8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--blue-deep);
+    }
+    .hero-trust-avatars span:first-child { margin-left: 0; }
+    .hero-trust-text { font-size: 0.85rem; color: var(--gray); }
+    .hero-trust-text strong { color: var(--blue-deep); }
+
+    .hero-image {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      padding: 4rem 6vw 4rem 2rem;
+      animation: fadeLeft 1s ease both 0.2s;
+    }
+
+    .hero-img-card {
+      width: 100%;
+      max-width: 480px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(11,61,94,0.18);
+      position: relative;
+    }
+    .hero-img-card img {
+      width: 100%; display: block;
+      aspect-ratio: 4/3; object-fit: cover;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      bottom: 6rem; left: 0;
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 12px;
+      animation: floatUp 3s ease-in-out infinite;
+    }
+    .hero-float-card .icon-box {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .hero-float-card p { font-size: 0.78rem; color: var(--gray); margin: 0; }
+    .hero-float-card strong { font-size: 0.9rem; color: var(--blue-deep); }
+
+    .hero-float-card2 {
+      position: absolute;
+      top: 5rem; right: 4vw;
+      background: var(--blue-deep);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 10px;
+      animation: floatUp 3s ease-in-out infinite 1.5s;
+    }
+    .hero-float-card2 p { font-size: 0.78rem; color: rgba(255,255,255,0.7); margin: 0; }
+    .hero-float-card2 strong { font-size: 0.88rem; color: white; display: block; }
+    .hero-float-card2 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-accent); flex-shrink: 0; }
+
+    @keyframes floatUp {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @media(max-width:900px){
+      #hero { grid-template-columns: 1fr; min-height: auto; padding-top: 100px; }
+      .hero-content { padding: 3rem 6vw 2rem; }
+      .hero-image { padding: 2rem 6vw 3rem; }
+      .hero-float-card, .hero-float-card2 { display: none; }
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 5rem 6vw; }
+    .section-label {
+      text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;
+      font-weight: 700; color: var(--green); margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--blue-deep);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--gray); line-height: 1.7;
+      max-width: 560px; font-weight: 300;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* ── PROBLEMA ── */
+    #problema {
+      background: var(--blue-deep);
+      color: white;
+      position: relative; overflow: hidden;
+    }
+    #problema::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    #problema .section-label { color: var(--green-accent); }
+    #problema .section-title { color: white; }
+    #problema .section-sub { color: rgba(255,255,255,0.65); max-width: 100%; }
+
+    .problema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+      align-items: center;
+    }
+    .problema-content { padding-right: 3rem; }
+    .problema-cards { display: grid; gap: 1.2rem; }
+
+    .problema-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: background 0.3s;
+    }
+    .problema-card:hover { background: rgba(255,255,255,0.1); }
+    .problema-card .card-icon { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
+    .problema-card h4 { font-size: 0.95rem; font-weight: 600; color: white; margin-bottom: 4px; }
+    .problema-card p { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    .solucion-box {
+      background: linear-gradient(135deg, var(--green), #1e8a5e);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin-top: 2rem;
+    }
+    .solucion-box h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: white; margin-bottom: 1rem; }
+    .solucion-box p { color: rgba(255,255,255,0.85); line-height: 1.7; font-size: 0.95rem; }
+
+    @media(max-width:768px){
+      .problema-grid { grid-template-columns: 1fr; }
+      .problema-content { padding-right: 0; }
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--off-white); }
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .servicio-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-light);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .servicio-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-mid), var(--green));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .servicio-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .servicio-card:hover::after { transform: scaleX(1); }
+
+    .servicio-icon {
+      width: 56px; height: 56px;
+      background: var(--blue-light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+    }
+    .servicio-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.6rem; }
+    .servicio-card p { font-size: 0.88rem; color: var(--gray); line-height: 1.65; }
+
+    /* ── BENEFICIOS ── */
+    #beneficios {
+      background: white;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .beneficios-img {
+      border-radius: 24px; overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .beneficios-img img { width: 100%; display: block; }
+    .beneficios-img-badge {
+      position: absolute; bottom: 24px; left: 24px;
+      background: white;
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .beneficios-img-badge .big-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--blue-deep); line-height: 1; }
+    .beneficios-img-badge p { font-size: 0.78rem; color: var(--gray); margin: 0; }
+
+    .beneficios-list { list-style: none; display: grid; gap: 1rem; }
+    .beneficios-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-light);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .beneficios-list li:hover { border-color: var(--green); background: var(--green-light); }
+    .beneficios-list li .check {
+      width: 30px; height: 30px; flex-shrink: 0;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green); font-weight: 700; font-size: 0.9rem;
+    }
+    .beneficios-list li div { }
+    .beneficios-list li h4 { font-size: 0.95rem; font-weight: 600; color: var(--blue-deep); margin-bottom: 3px; }
+    .beneficios-list li p { font-size: 0.84rem; color: var(--gray); line-height: 1.5; margin: 0; }
+
+    @media(max-width:900px){
+      #beneficios { grid-template-columns: 1fr; }
+    }
+
+    /* ── POR QUÉ ELEGIRNOS ── */
+    #porque { background: var(--off-white); }
+    .porque-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .porque-item {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s;
+    }
+    .porque-item:hover { transform: translateY(-4px); }
+    .porque-item .icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--blue-light), var(--green-light));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 1.2rem;
+    }
+    .porque-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.5rem; }
+    .porque-item p { font-size: 0.84rem; color: var(--gray); line-height: 1.6; }
+
+    .porque-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--gray-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+    .stat-box {
+      background: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    .stat-box .num { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: var(--blue-deep); line-height: 1; margin-bottom: 6px; }
+    .stat-box .num span { color: var(--green); }
+    .stat-box p { font-size: 0.85rem; color: var(--gray); }
+
+    @media(max-width:600px){
+      .porque-stats { grid-template-columns: 1fr; }
+    }
+
+    /* ── TESTIMONIOS ── */
+    #testimonios { background: white; }
+    .testimonios-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .testimonio-card {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid var(--gray-light);
+      position: relative;
+    }
+    .testimonio-card::before {
+      content: '"';
+      position: absolute; top: 16px; right: 24px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: var(--blue-light);
+      line-height: 1;
+    }
+    .stars { color: #f5a623; font-size: 0.9rem; margin-bottom: 1rem; }
+    .testimonio-card p { font-size: 0.92rem; color: var(--text); line-height: 1.7; font-style: italic; margin-bottom: 1.5rem; }
+    .testimonio-author { display: flex; align-items: center; gap: 12px; }
+    .testimonio-author .avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-mid), var(--green));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: white; font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .testimonio-author strong { font-size: 0.9rem; color: var(--blue-deep); display: block; }
+    .testimonio-author span { font-size: 0.8rem; color: var(--gray); }
+
+    .trust-badges {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: center;
+      margin-top: 3.5rem;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--off-white);
+      border: 1px solid var(--gray-light);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 0.85rem; font-weight: 600; color: var(--blue-deep);
+    }
+    .trust-badge .icon { font-size: 1.1rem; }
+
+    /* ── CTA FINAL ── */
+    #cta-final {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #0d4d7a 50%, var(--blue-deep) 100%);
+      text-align: center;
+      padding: 6rem 6vw;
+      position: relative; overflow: hidden;
+    }
+    #cta-final::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,157,112,0.15) 0%, transparent 70%);
+    }
+    #cta-final .section-label { color: var(--green-accent); }
+    #cta-final .section-title { color: white; margin: 0 auto 1rem; max-width: 600px; }
+    #cta-final .section-sub { color: rgba(255,255,255,0.65); margin: 0 auto 2.5rem; }
+    #cta-final .btn-primary { font-size: 1.1rem; padding: 18px 36px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #09283e;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 6vw;
+      font-size: 0.85rem;
+    }
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      display: flex; align-items: center; gap: 12px;
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeUp 1s ease both 1s;
+    }
+    .wa-float:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(37,211,102,0.55); }
+    .wa-float svg { width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+
+    @media(max-width:480px){
+      .wa-float span { display: none; }
+      .wa-float { padding: 14px; border-radius: 50%; }
+    }
+
+    /* ── SCROLL ANIMATION UTILITY ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">FISIOSOPORTE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#beneficios">Beneficios</a></li>
+    <li><a href="#porque">Nosotros</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20información%20sobre%20terapia%20respiratoria%20a%20domicilio" class="nav-cta">WhatsApp</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Servicio a domicilio disponible</div>
+    <h1 class="hero-title">
+      Respira mejor<br>
+      desde la <em>comodidad</em><br>
+      de tu hogar
+    </h1>
+    <p class="hero-subtitle">
+      Terapia respiratoria especializada a domicilio para bebés, niños, adultos y adultos mayores. Atención profesional, personalizada y sin esperas.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/1234567890?text=Hola,%20necesito%20una%20terapia%20respiratoria%20a%20domicilio" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Contactar ahora
+      </a>
+      <a href="#servicios" class="btn-secondary">Ver servicios →</a>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-avatars">
+        <span>M</span><span>L</span><span>C</span><span>R</span>
+      </div>
+      <p class="hero-trust-text"><strong>+200 familias</strong> ya confían en nosotros</p>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <div class="hero-img-card">
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80&auto=format&fit=crop" alt="Fisioterapeuta respiratorio atendiendo a paciente en casa" />
+    </div>
+    <div class="hero-float-card">
+      <div class="icon-box">🫁</div>
+      <div>
+        <strong>Atención personalizada</strong>
+        <p>Para todas las edades</p>
+      </div>
+    </div>
+    <div class="hero-float-card2">
+      <div class="dot"></div>
+      <div>
+        <strong>Disponible hoy</strong>
+        <p>Sin citas previas largas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA Y SOLUCIÓN -->
+<section id="problema">
+  <div class="problema-grid">
+    <div class="problema-content reveal">
+      <p class="section-label">El problema que resolvemos</p>
+      <h2 class="section-title">Los problemas respiratorios no esperan</h2>
+      <p class="section-sub">Desplazarse a una clínica con un bebé con dificultad para respirar, un adulto mayor con problemas pulmonares o un niño con bronquitis es un desafío enorme. El sistema de salud tradicional genera largas esperas y estrés innecesario.</p>
+      <div class="solucion-box">
+        <h3>Nuestra solución: cuidado en tu hogar</h3>
+        <p>FISIOSOPORTE lleva la terapia respiratoria profesional directamente a tu puerta. Nuestros especialistas trabajan con equipos modernos en la comodidad de tu hogar, acelerando la recuperación y previniendo complicaciones graves.</p>
+      </div>
+    </div>
+    <div class="problema-cards reveal">
+      <div class="problema-card">
+        <div class="card-icon">🏥</div>
+        <div>
+          <h4>Esperas largas e innecesarias</h4>
+          <p>Horas en salas de espera cuando el paciente necesita atención inmediata y personalizada.</p>
+        </div>
+      </div>
+      <div class="problema-card">
+        <div class="card-icon">🚗</div>
+        <div>
+          <h4>Traslado difícil y estresante</h4>
+          <p>Movilizar a pacientes con dificultad respiratoria puede agravar su condición.</p>
+        </div>
+      </div>
+      <div class="problema-card">
+        <div class="card-icon">👨‍👩‍👧</div>
+        <div>
+          <h4>Toda la familia bajo estrés</h4>
+          <p>La familia entera se ve afectada cuando un ser querido tiene problemas para respirar.</p>
+        </div>
+      </div>
+      <div class="problema-card">
+        <div class="card-icon">⏱️</div>
+        <div>
+          <h4>Atención no personalizada</h4>
+          <p>En consultorios masivos, es difícil dar seguimiento individualizado a cada paciente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-header reveal" style="text-align:center; max-width:600px; margin:0 auto 3.5rem;">
+    <p class="section-label">Nuestros servicios</p>
+    <h2 class="section-title">Terapia respiratoria<br>especializada a domicilio</h2>
+    <p class="section-sub" style="margin:0 auto;">Ofrecemos una gama completa de tratamientos adaptados para cada tipo de paciente y condición respiratoria.</p>
+  </div>
+  <div class="servicios-grid">
+    <div class="servicio-card reveal">
+      <div class="servicio-icon">👶</div>
+      <h3>Terapia Respiratoria Pediátrica</h3>
+      <p>Atención especializada para bebés y niños con problemas respiratorios como bronquitis, asma, bronquiolitis y neumonías. Técnicas seguras y adaptadas a su edad.</p>
+    </div>
+    <div class="servicio-card reveal">
+      <div class="servicio-icon">🫁</div>
+      <h3>Fisioterapia Pulmonar</h3>
+      <p>Técnicas de higiene bronquial y drenaje postural para eliminar secreciones y mejorar la ventilación pulmonar en pacientes de todas las edades.</p>
+    </div>
+    <div class="servicio-card reveal">
+      <div class="servicio-icon">🧓</div>
+      <h3>Terapia para Adulto Mayor</h3>
+      <p>Programa diseñado para pacientes mayores con EPOC, insuficiencia respiratoria o en recuperación post-cirugía, con enfoque en comodidad y seguridad.</p>
+    </div>
+    <div class="servicio-card reveal">
+      <div class="servicio-icon">💨</div>
+      <h3>Rehabilitación Respiratoria</h3>
+      <p>Programas de recuperación para pacientes post-COVID, post-neumonía o con enfermedades pulmonares crónicas, con objetivos medibles.</p>
+    </div>
+    <div class="servicio-card reveal">
+      <div class="servicio-icon">🌬️</div>
+      <h3>Terapia con Nebulización</h3>
+      <p>Aplicación de medicamentos mediante nebulizadores de alta eficiencia para alivio rápido de la inflamación bronquial y facilitar la respiración.</p>
+    </div>
+    <div class="servicio-card reveal">
+      <div class="servicio-icon">🏃</div>
+      <h3>Ejercicios Respiratorios</h3>
+      <p>Enseñanza de técnicas de respiración y ejercicios funcionales para fortalecer los músculos respiratorios y mejorar la capacidad pulmonar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section id="beneficios">
+  <div class="beneficios-img reveal">
+    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=700&q=80&auto=format&fit=crop" alt="Terapeuta respiratorio atendiendo paciente en casa" />
+    <div class="beneficios-img-badge">
+      <div class="big-num">98%</div>
+      <p>de satisfacción<br>de pacientes</p>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="section-label">Por qué elegir casa</p>
+    <h2 class="section-title">Los beneficios de recibir terapia en tu hogar</h2>
+    <p class="section-sub" style="margin-bottom:2rem;">La recuperación se acelera cuando el paciente está en un entorno conocido y relajado. Tu hogar es el mejor ambiente terapéutico.</p>
+    <ul class="beneficios-list">
+      <li>
+        <div class="check">✓</div>
+        <div>
+          <h4>Recuperación más rápida</h4>
+          <p>El ambiente familiar reduce el estrés y favorece la respuesta al tratamiento.</p>
+        </div>
+      </li>
+      <li>
+        <div class="check">✓</div>
+        <div>
+          <h4>Sin riesgo de contagios</h4>
+          <p>Evita la exposición a otros gérmenes en clínicas y salas de espera.</p>
+        </div>
+      </li>
+      <li>
+        <div class="check">✓</div>
+        <div>
+          <h4>Comodidad total para el paciente</h4>
+          <p>No hay traslados difíciles, el paciente descansa en su propia cama.</p>
+        </div>
+      </li>
+      <li>
+        <div class="check">✓</div>
+        <div>
+          <h4>Participación activa de la familia</h4>
+          <p>La familia aprende cómo ayudar en el proceso de recuperación.</p>
+        </div>
+      </li>
+      <li>
+        <div class="check">✓</div>
+        <div>
+          <h4>Horarios flexibles</h4>
+          <p>Programamos la visita a la hora que mejor se adapte a tu rutina.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- POR QUÉ ELEGIRNOS -->
+<section id="porque">
+  <div class="section-header reveal" style="text-align:center; max-width:600px; margin:0 auto 3rem;">
+    <p class="section-label">Por qué elegirnos</p>
+    <h2 class="section-title">Profesionalismo y<br>trato humano garantizados</h2>
+  </div>
+
+  <div class="porque-stats reveal">
+    <div class="stat-box">
+      <div class="num">+200<span></span></div>
+      <p>Pacientes atendidos con éxito</p>
+    </div>
+    <div class="stat-box">
+      <div class="num">5<span>★</span></div>
+      <p>Calificación promedio de servicio</p>
+    </div>
+    <div class="stat-box">
+      <div class="num">24<span>h</span></div>
+      <p>Respuesta rápida a tu solicitud</p>
+    </div>
+  </div>
+
+  <div class="porque-grid">
+    <div class="porque-item reveal">
+      <div class="icon">🎓</div>
+      <h4>Profesionales certificados</h4>
+      <p>Fisioterapeutas con formación especializada en terapia respiratoria y certificaciones vigentes.</p>
+    </div>
+    <div class="porque-item reveal">
+      <div class="icon">🏠</div>
+      <h4>Servicio a domicilio</h4>
+      <p>Vamos donde estés. Llevamos todo el equipo necesario para brindarte la mejor atención en casa.</p>
+    </div>
+    <div class="porque-item reveal">
+      <div class="icon">🔬</div>
+      <h4>Técnicas modernas</h4>
+      <p>Utilizamos los métodos más actualizados y eficaces en fisioterapia respiratoria basados en evidencia.</p>
+    </div>
+    <div class="porque-item reveal">
+      <div class="icon">❤️</div>
+      <h4>Trato humano y cercano</h4>
+      <p>Creemos que la salud no es solo física. Tratamos a cada paciente con empatía, paciencia y dedicación.</p>
+    </div>
+    <div class="porque-item reveal">
+      <div class="icon">📋</div>
+      <h4>Plan personalizado</h4>
+      <p>Cada paciente recibe un plan de tratamiento diseñado específicamente para su diagnóstico y necesidades.</p>
+    </div>
+    <div class="porque-item reveal">
+      <div class="icon">⚡</div>
+      <h4>Atención inmediata</h4>
+      <p>Contacta por WhatsApp y recibe respuesta rápida. Sin largas esperas ni procesos burocráticos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+  <div class="section-header reveal" style="text-align:center; max-width:600px; margin:0 auto 3.5rem;">
+    <p class="section-label">Testimonios</p>
+    <h2 class="section-title">Lo que dicen nuestras familias</h2>
+  </div>
+  <div class="testimonios-grid">
+    <div class="testimonio-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Mi bebé de 8 meses tuvo bronquiolitis y no sabía cómo reaccionar. FISIOSOPORTE llegó a casa en menos de 2 horas y en tres sesiones mi hijo ya respiraba con normalidad. El servicio fue excepcional."</p>
+      <div class="testimonio-author">
+        <div class="avatar">M</div>
+        <div>
+          <strong>María Fernanda G.</strong>
+          <span>Mamá de paciente pediátrico</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonio-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Mi padre tiene 78 años y EPOC. Llevarlo al hospital era un suplicio. Con FISIOSOPORTE recibe su terapia en casa, está mucho más tranquilo y su evolución ha sido increíble en pocas semanas."</p>
+      <div class="testimonio-author">
+        <div class="avatar">C</div>
+        <div>
+          <strong>Carlos A. Rivas</strong>
+          <span>Hijo de paciente adulto mayor</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonio-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Después de tener COVID-19 quedé con fatiga y dificultad para respirar. Los ejercicios y terapias de FISIOSOPORTE me ayudaron a recuperar mi capacidad pulmonar. Muy profesionales y atentos."</p>
+      <div class="testimonio-author">
+        <div class="avatar">L</div>
+        <div>
+          <strong>Laura Mendoza</strong>
+          <span>Paciente post-COVID</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="trust-badges reveal">
+    <div class="trust-badge"><span class="icon">🏆</span> Profesionales certificados</div>
+    <div class="trust-badge"><span class="icon">🔒</span> Atención segura y confiable</div>
+    <div class="trust-badge"><span class="icon">📱</span> Respuesta inmediata por WhatsApp</div>
+    <div class="trust-badge"><span class="icon">❤️</span> Trato humano garantizado</div>
+    <div class="trust-badge"><span class="icon">🏠</span> Servicio 100% a domicilio</div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <p class="section-label">¿Listo para comenzar?</p>
+  <h2 class="section-title">Tu familiar merece respirar<br>con tranquilidad hoy mismo</h2>
+  <p class="section-sub">Contáctanos ahora por WhatsApp. Un especialista te orientará sin compromiso sobre el tratamiento más adecuado para tu familiar.</p>
+  <a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20información%20sobre%20terapia%20respiratoria%20a%20domicilio.%20¿Podrían%20ayudarme?" class="btn-primary">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    Escribir por WhatsApp ahora
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>FISIOSOPORTE</strong> &nbsp;·&nbsp; Terapia Respiratoria Especializada a Domicilio &nbsp;·&nbsp; © 2025 Todos los derechos reservados.</p>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/1234567890?text=Hola,%20me%20interesa%20información%20sobre%20terapia%20respiratoria%20a%20domicilio" class="wa-float" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+  <span>Escríbenos ahora</span>
+</a>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(r => observer.observe(r));
+
+  // Stagger children inside grids
+  document.querySelectorAll('.servicios-grid, .porque-grid, .testimonios-grid, .problema-cards').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.08) + 's';
+    });
+  });
+</script>
+</body>
+</html>
